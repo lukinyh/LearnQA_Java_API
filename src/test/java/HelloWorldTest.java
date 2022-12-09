@@ -223,8 +223,8 @@ public class HelloWorldTest {
                 .post("https://playground.learnqa.ru/api/get_auth_cookie")
                 .andReturn();
 
-        String resppnseCookie = response.getCookie("auth_cookie");
-        System.out.println(resppnseCookie);
+        String responseCookie = response.getCookie("auth_cookie");
+        System.out.println(responseCookie);
     }
 
     @Test

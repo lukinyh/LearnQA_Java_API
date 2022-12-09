@@ -33,9 +33,32 @@ public class HomeWork2 {
                 .when()
                 .get("https://playground.learnqa.ru/api/long_redirect")
                 .andReturn();
-        response.prettyPrint();
 
         String locationHeader = response.getHeader("Location");
         System.out.println(locationHeader);
+    }
+
+    /*
+    * Ex7: Долгий редирект
+    * */
+    @Test
+    public void testRedirectingWithCycle() {
+        String url = "https://playground.learnqa.ru/api/long_redirect";
+        Response response;
+        do {
+            System.out.println(url);
+
+            response = RestAssured
+                    .given()
+                    .redirects()
+                    .follow(false)
+                    .when()
+                    .get(url)
+                    .andReturn();
+
+            url = response.getHeader("Location");
+        } while (response.getStatusCode() != 200);
+
+        System.out.println(response.getStatusCode());
     }
 }
