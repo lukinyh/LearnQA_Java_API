@@ -1,9 +1,11 @@
-
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.jsoup.Jsoup;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +50,7 @@ public class HomeWork2 {
     public void testRedirectingWithCycle() {
         String url = "https://playground.learnqa.ru/api/long_redirect";
         Response response;
+        int count = 0;
         do {
             System.out.println(url);
 
@@ -60,8 +63,9 @@ public class HomeWork2 {
                     .andReturn();
 
             url = response.getHeader("Location");
+            count++;
         } while (response.getStatusCode() != 200);
-
+        System.out.println("Count of redirect: " + (count-1));
         System.out.println(response.getStatusCode());
     }
 
@@ -115,5 +119,78 @@ public class HomeWork2 {
                 .given()
                 .get(url)
                 .jsonPath();
+    }
+
+    /*
+     * Ex9: Подбор пароля
+     * */
+    @Test
+    public void testPasswordGuessing() throws IOException {
+        String login = "super_admin";
+        String password = "password";
+
+        Map<String, String> credentials = new HashMap();
+        credentials.put("login", login);
+
+
+        List<String> passwords = getPasswords();
+
+        credentials.put("password", passwords.get(0));
+
+        int indexOfPassword = 1;
+        while (!checkPassword(credentials) && indexOfPassword < passwords.size()) {
+            credentials.replace("password", passwords.get(indexOfPassword));
+            indexOfPassword++;
+        }
+    }
+
+    /*
+    * Checks passwords and print if some password is correct
+    * */
+    private boolean checkPassword(Map<String, String> credentials) {
+        // gets auth_cookie
+        String auth_cookie = RestAssured
+                .given()
+                .body(credentials)
+                .post("https://playground.learnqa.ru/ajax/api/get_secret_password_homework")
+                .andReturn()
+                .getCookie("auth_cookie");
+
+        Map<String, String> cookies = new HashMap<>();
+        if (auth_cookie != null) {
+            cookies.put("auth_cookie", auth_cookie);
+        }
+
+        // Checks via auth_cookie that password is correct
+        String result = RestAssured
+                .given()
+                .body(credentials)
+                .cookies(cookies)
+                .when()
+                .post("https://playground.learnqa.ru/ajax/api/check_auth_cookie")
+                .body().asString();
+
+        if (result.equals("You are authorized")) {
+            System.out.printf("Password: %s\n", credentials.get("password"));
+            System.out.println(result);
+            return true;
+        } else {
+            // uncomment next two strings if you want to see process of guessing
+            // System.out.printf("Password: %s\n", params.get("password"));
+            // System.out.println(result);
+            return false;
+        }
+    }
+
+    /*
+    * Gets passwords from url as list
+    * */
+    private List<String> getPasswords() throws IOException {
+        String url = "https://en.wikipedia.org/wiki/List_of_the_most_common_passwords";
+        String xpath = "//table/caption[contains(text(), 'SplashData')]/../tbody/tr/td[@align='left']";
+
+        Elements elements = Jsoup.connect(url).get().body().selectXpath(xpath);
+        List<String> passwords = elements.eachText().stream().distinct().toList();
+        return passwords;
     }
 }

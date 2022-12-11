@@ -32,7 +32,7 @@ public class HelloWorldTest {
         response.prettyPrint();
     }
 
-    // Changs "andReturn()" to "jsonPath" and used response method "get" to get answer
+    // Changes "andReturn()" to "jsonPath" and used response method "get" to get answer
     @Test
     public void testRestAssured3() {
         Map<String, String> params = new HashMap<>();
