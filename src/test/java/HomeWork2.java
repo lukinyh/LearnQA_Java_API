@@ -189,7 +189,7 @@ public class HomeWork2 {
         String xpath = "//table/caption[contains(text(), 'SplashData')]/../tbody/tr/td[@align='left']";
 
         Elements elements = Jsoup.connect(url).get().body().selectXpath(xpath);
-        List<String> passwords = elements.eachText().stream().distinct().toList();
+        List<String>  passwords = elements.eachText().stream().distinct().toList();
         return passwords;
     }
 }
