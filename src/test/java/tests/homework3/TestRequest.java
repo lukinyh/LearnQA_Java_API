@@ -13,6 +13,14 @@ public class TestRequest extends BaseTestCase {
         Response response = RestAssured
                 .get("https://playground.learnqa.ru/api/homework_cookie")
                 .andReturn();
-        assertEquals("hw_value", response.getCookie("HomeWork"), "JSON value is not equal to expected value");
+        assertEquals("hw_value", response.getCookie("HomeWork"), "Cookie is not equal to expected value");
+    }
+
+    @Test
+    public void testHeader() {
+        Response response = RestAssured
+                .get(" https://playground.learnqa.ru/api/homework_header")
+                .andReturn();
+        assertEquals("Some secret value", response.getHeader("x-secret-homework-header"), "Header is not equal to expected value");
     }
 }
