@@ -61,11 +61,10 @@ public class HomeWork2 {
                     .when()
                     .get(url)
                     .andReturn();
-
             url = response.getHeader("Location");
             count++;
         } while (response.getStatusCode() != 200);
-        System.out.println("Count of redirect: " + (count-1));
+        System.out.println("Count of redirect: " + (count - 1));
         System.out.println(response.getStatusCode());
     }
 
