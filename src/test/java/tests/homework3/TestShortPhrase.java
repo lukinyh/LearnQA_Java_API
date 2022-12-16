@@ -1,4 +1,4 @@
-package tests.homework2;
+package tests.homework3;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

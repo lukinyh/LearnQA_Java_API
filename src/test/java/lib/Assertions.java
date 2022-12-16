@@ -10,6 +10,6 @@ public class Assertions {
         Response.then().assertThat().body("$", hasKey(name));
 
         int value = Response.jsonPath().getInt(name);
-        assertEquals(expectedValue, value, "JSON value is not equeal to expected value");
+        assertEquals(expectedValue, value, "JSON value is not equal to expected value");
     }
 }
