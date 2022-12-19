@@ -15,6 +15,9 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestRequest extends BaseTestCase {
+    /*
+    * Ex11: Тест запроса на метод cookie
+    * */
     @Test
     public void testCookie() {
         Response response = RestAssured
@@ -23,6 +26,9 @@ public class TestRequest extends BaseTestCase {
         assertEquals("hw_value", response.getCookie("HomeWork"), "Cookie is not equal to expected value");
     }
 
+    /*
+    * Ex12: Тест запроса на метод header
+    * */
     @Test
     public void testHeader() {
         Response response = RestAssured
@@ -31,6 +37,9 @@ public class TestRequest extends BaseTestCase {
         assertEquals("Some secret value", response.getHeader("x-secret-homework-header"), "Header is not equal to expected value");
     }
 
+    /*
+    * Ex13: User Agent
+    * */
     @ParameterizedTest
     @MethodSource("argumentsFromResponse")
     public void testUserAgent(String userAgent, String expectedPlatform, String expectedBrowser, String expectedDevice) {
