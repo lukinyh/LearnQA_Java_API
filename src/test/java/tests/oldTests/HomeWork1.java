@@ -1,3 +1,5 @@
+package tests.oldTests;
+
 import org.junit.jupiter.api.Test;
 
 public class HomeWork1 {

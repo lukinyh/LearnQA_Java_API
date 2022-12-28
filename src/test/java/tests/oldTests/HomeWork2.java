@@ -1,3 +1,5 @@
+package tests.oldTests;
+
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -9,6 +11,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class HomeWork2 {
@@ -189,7 +192,7 @@ public class HomeWork2 {
         String xpath = "//table/caption[contains(text(), 'SplashData')]/../tbody/tr/td[@align='left']";
 
         Elements elements = Jsoup.connect(url).get().body().selectXpath(xpath);
-        List<String>  passwords = elements.eachText().stream().distinct().toList();
+        List<String> passwords = elements.eachText().stream().distinct().collect(Collectors.toList());
         return passwords;
     }
 }
