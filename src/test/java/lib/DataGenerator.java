@@ -21,6 +21,14 @@ public class DataGenerator {
         return data;
     }
 
+    public static Map<String, String> getDefaultLoginData() {
+        Map<String, String> data = new HashMap<>();
+        data.put("email", "vinkotov@example.com");
+        data.put("password", "1234");
+
+        return data;
+    }
+
     public static Map<String, String> getRegistrationData(Map<String, String> nonDefaultValues) {
         Map<String, String> defaultValues = DataGenerator.getRegistrationData();
 
