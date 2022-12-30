@@ -4,9 +4,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.restassured.response.Response;
-import lib.ApiCoreRequests;
-import lib.Assertions;
-import lib.BaseTestCase;
+import lib.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,15 +25,15 @@ public class UserAuthTest extends BaseTestCase {
     @BeforeEach
     public void loginUser() {
         HashMap<String, String> authData = new HashMap<>();
-        authData.put("email", "vinkotov@example.com");
-        authData.put("password", "1234");
+        authData.put(User.EMAIL, "vinkotov@example.com");
+        authData.put(User.PASSWORD, "1234");
 
         Response responseGetAuth = apiCoreRequests
-                .makePostRequest("https://playground.learnqa.ru/api/user/login", authData);
+                .makePostRequest(URLs.LOGIN, authData);
 
-        this.cookie = this.getCookie(responseGetAuth, "auth_sid");
-        this.header = this.getHeader(responseGetAuth, "x-csrf-token");
-        this.userIdOnAuth = this.getIntFromJson(responseGetAuth, "user_id");
+        this.cookie = this.getCookie(responseGetAuth, User.AUTH_SID);
+        this.header = this.getHeader(responseGetAuth, User.X_CSRF);
+        this.userIdOnAuth = this.getIntFromJson(responseGetAuth, User.USER_ID);
     }
 
     @Test
@@ -44,12 +42,12 @@ public class UserAuthTest extends BaseTestCase {
     public void testAuthUser() {
         Response responseCheckAuth = apiCoreRequests
                 .makeGetRequest(
-                        "https://playground.learnqa.ru/api/user/auth",
+                        URLs.GET_USER_ID,
                         this.header,
                         this.cookie
                 );
 
-        Assertions.assertJsonByName(responseCheckAuth, "user_id", this.userIdOnAuth);
+        Assertions.assertJsonByName(responseCheckAuth, User.USER_ID, this.userIdOnAuth);
     }
 
     @Description("This is test checks authorization status w/o sending auth cookie or token")
@@ -60,16 +58,16 @@ public class UserAuthTest extends BaseTestCase {
 
         if (condition.equals("cookie")) {
             Response responseForCheck = apiCoreRequests.makeGetRequestWithCookie(
-                    "https://playground.learnqa.ru/api/user/auth",
+                    URLs.GET_USER_ID,
                     this.cookie
             );
-            Assertions.assertJsonByName(responseForCheck, "user_id", 0);
+            Assertions.assertJsonByName(responseForCheck, User.USER_ID, 0);
         } else if (condition.equals("headers")){
             Response responseForCheck = apiCoreRequests.makeGetRequestWithToken(
-                    "https://playground.learnqa.ru/api/user/auth",
+                    URLs.GET_USER_ID,
                     this.header
             );
-            Assertions.assertJsonByName(responseForCheck, "user_id", 0);
+            Assertions.assertJsonByName(responseForCheck, User.USER_ID, 0);
         } else {
             throw new IllegalArgumentException("Condition value is not known: " + condition);
         }

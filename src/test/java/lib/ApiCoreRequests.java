@@ -2,6 +2,7 @@ package lib;
 
 import io.qameta.allure.Step;
 import io.qameta.allure.restassured.AllureRestAssured;
+import io.restassured.RestAssured;
 import io.restassured.http.Header;
 import io.restassured.response.Response;
 
@@ -52,6 +53,35 @@ public class ApiCoreRequests {
                 .filter(new AllureRestAssured())
                 .body(authData)
                 .post(url)
+                .andReturn();
+    }
+
+    @Step("Make a DELETE-request")
+    public Response makeDeleteRequest(String url, String token, String cookie, Map<String, String> authData) {
+        return given()
+                .filter(new AllureRestAssured())
+                .header(new Header("x-csrf-token", token))
+                .cookie("auth_sid", cookie)
+                .body(authData)
+                .delete(url)
+                .andReturn();
+    }
+
+    public Response makePutRequest(String url, String header, String auth_sid, Map<String, String> editData) {
+        return RestAssured
+                .given()
+                .header("x-csrf-token", header)
+                .cookie("auth_sid", auth_sid)
+                .body(editData)
+                .put(url)
+                .andReturn();
+    }
+
+    public Response makePutRequestWithoutAuthentication(String url, Map<String, String> editData) {
+        return RestAssured
+                .given()
+                .body(editData)
+                .put(url)
                 .andReturn();
     }
 }

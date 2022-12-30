@@ -21,10 +21,30 @@ public class DataGenerator {
         return data;
     }
 
-    public static Map<String, String> getDefaultLoginData() {
+    public static Map<String, String> getSecondLoginData() {
         Map<String, String> data = new HashMap<>();
         data.put("email", "vinkotov@example.com");
         data.put("password", "1234");
+
+        return data;
+    }
+
+    public static Map<String, String> getDefaultData() {
+
+        Map<String, String> data = getDefaultDataForUpdate();
+        data.put("email", "defaultemail@gmail.com");
+        data.put("password", "1234");
+        data.put("id", "57204");
+
+        return data;
+    }
+
+    public static Map<String, String> getDefaultDataForUpdate() {
+
+        Map<String, String> data = new HashMap<>();
+        data.put("firstName", "testFirstName");
+        data.put("lastName", "testLastName");
+        data.put("username", "testUsername");
 
         return data;
     }
