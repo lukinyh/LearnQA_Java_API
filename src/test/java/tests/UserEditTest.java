@@ -230,29 +230,6 @@ public class UserEditTest extends BaseTestCase {
         updateDefaultUserToDefaultValues();
     }
 
-/*    private void removeUser() {
-
-        // LOGIN
-        Map<String, String> authData = new HashMap<>();
-        authData.put(User.EMAIL, this.userData.get(User.EMAIL));
-        authData.put(User.PASSWORD, this.userData.get(User.PASSWORD));
-
-        Response responseGetAuth = apiCoreRequests
-                .makePostRequest(URLs.LOGIN, authData);
-
-        this.userIdOnAuth = this.getIntFromJson(responseGetAuth, User.USER_ID);
-        String token = this.getHeader(responseGetAuth, User.X_CSRF);
-        String cookie = this.getCookie(responseGetAuth, User.AUTH_SID);
-
-        // REMOVE
-        Response responseToRemoveUser = apiCoreRequests
-                .makeDeleteRequest(
-                        URLs.DELETE_USER + this.userIdOnAuth,
-                        token,
-                        cookie,
-                        authData);
-    }
-*/
     private void updateDefaultUserToDefaultValues() {
 
         Map<String, String> defaultData = DataGenerator.getDefaultData();
