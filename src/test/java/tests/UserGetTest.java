@@ -3,6 +3,7 @@ package tests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lib.*;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,7 @@ public class UserGetTest extends BaseTestCase {
         Assertions.assertJsonHasNotField(responseUserData, User.EMAIL);
     }
 
+    @Step("Login and get details information")
     private Response loginAndGetDetails(boolean isTheSameUser) {
         Map<String, String> authData = DataGenerator.getDefaultData();
 

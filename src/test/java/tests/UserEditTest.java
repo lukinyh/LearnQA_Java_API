@@ -3,6 +3,7 @@ package tests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lib.*;
 import org.junit.jupiter.api.AfterEach;
@@ -190,6 +191,7 @@ public class UserEditTest extends BaseTestCase {
                 this.userData.get(User.FIRSTNAME));
     }
 
+    @Step("Update data and check result")
     private Response updateDataAndCheck(
                                 Response responseGetAuth,
                                 int userId,
@@ -230,6 +232,7 @@ public class UserEditTest extends BaseTestCase {
         updateDefaultUserToDefaultValues();
     }
 
+    @Step("Restore the default data of the default user")
     private void updateDefaultUserToDefaultValues() {
 
         Map<String, String> defaultData = DataGenerator.getDefaultData();

@@ -3,6 +3,7 @@ package tests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lib.*;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Epic("Registration cases")
-@Feature("Regirstration")
+@Feature("Registration")
 public class UserRegisterTest extends BaseTestCase {
 
     private final ApiCoreRequests apiCoreRequests = new ApiCoreRequests();
@@ -103,6 +104,7 @@ public class UserRegisterTest extends BaseTestCase {
         testCreateUserWithNotStandardParameter(User.USERNAME, value);
     }
 
+    @Step("Create user with not standard parameter: {parameter} - {value} ")
     private void testCreateUserWithNotStandardParameter(String parameter, String value) {
         Map<String, String> userData = new HashMap<>();
         userData.put(parameter, value);

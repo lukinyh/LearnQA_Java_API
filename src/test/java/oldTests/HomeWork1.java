@@ -1,4 +1,4 @@
-package tests.oldTests;
+package oldTests;
 
 import org.junit.jupiter.api.Test;
 

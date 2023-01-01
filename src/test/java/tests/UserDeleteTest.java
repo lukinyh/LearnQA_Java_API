@@ -1,6 +1,7 @@
 package tests;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import lib.*;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,7 @@ public class UserDeleteTest extends BaseTestCase {
         Assertions.assertResponseTextEquals(responseUserData, Errors.USER_NOT_FOUND);
     }
 
+    @Step("Register user")
     private void registerUser() {
         this.userData = DataGenerator.getRegistrationData();
 

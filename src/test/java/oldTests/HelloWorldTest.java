@@ -1,4 +1,4 @@
-package tests.oldTests;
+package oldTests;
 
 import io.restassured.RestAssured;
 import io.restassured.http.Headers;

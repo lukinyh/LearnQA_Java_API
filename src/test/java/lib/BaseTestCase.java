@@ -1,5 +1,6 @@
 package lib;
 
+import io.qameta.allure.Step;
 import io.restassured.http.Headers;
 import io.restassured.response.Response;
 
@@ -31,6 +32,7 @@ public class BaseTestCase {
         return Response.jsonPath().getInt(name);
     }
 
+    @Step("Remove user")
     protected Response removeUser(Map<String, String> userData) {
         // LOGIN
         Map<String, String> authData = new HashMap<>();

@@ -67,6 +67,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
+    @Step("Make a PUT-request: change user's parameters")
     public Response makePutRequest(String url, String header, String auth_sid, Map<String, String> editData) {
         return RestAssured
                 .given()
@@ -77,6 +78,7 @@ public class ApiCoreRequests {
                 .andReturn();
     }
 
+    @Step("Make a PUT-request without authentication: change user's parameters")
     public Response makePutRequestWithoutAuthentication(String url, Map<String, String> editData) {
         return RestAssured
                 .given()
